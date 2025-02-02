@@ -1,0 +1,406 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DreamLink Nexus - Dream Journal</title>
+  
+  <!-- Preload critical fonts -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" as="style">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" as="style">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" as="style">
+  
+  <!-- Load fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <div class="loading-screen">
+    <div class="loading-portal">
+      <div class="loading-spiral"></div>
+    </div>
+    <div class="brand">
+      <h1>DreamLink NexusTM</h1>
+      <div class="company">by Transcendent Innovations</div>
+    </div>
+    <div class="loading-progress">
+      <div class="progress-bar"></div>
+    </div>
+    <div class="loading-status">Initializing dream connection...</div>
+  </div>
+
+  <div class="device-container">
+    <div class="brand">
+      <h1>DreamLink NexusTM</h1>
+      <div class="company">by Transcendent Innovations</div>
+    </div>
+    
+    <div class="dream-portal">
+      <div class="spirit-realm"></div>
+      <div class="dream-waves"></div>
+    </div>
+    
+    <div class="controls">
+      <div class="frequency-display">
+        <span class="hz">0.0</span> Hz
+      </div>
+      
+      <div class="sliders">
+        <div class="slider-group">
+          <label>Theta Waves</label>
+          <input type="range" id="thetaSlider" min="4" max="8" step="0.1" value="6">
+        </div>
+        
+        <div class="slider-group">
+          <label>Delta Waves</label>
+          <input type="range" id="deltaSlider" min="0.5" max="4" step="0.1" value="2">
+        </div>
+        
+        <div class="slider-group">
+          <label>Spiritual Resonance</label>
+          <input type="range" id="resonanceSlider" min="0" max="100" value="50">
+        </div>
+      </div>
+
+      <button id="activateButton">Initiate Dream Connection</button>
+    </div>
+
+    <div class="message-display">
+      <div class="messages"></div>
+    </div>
+
+    <div class="symbol-search">
+      <h2>Dream Symbol Database</h2>
+      <input type="text" id="symbolSearch" placeholder="Search dream symbols...">
+      <div id="symbolResults" class="symbol-results"></div>
+    </div>
+
+    <div class="training-module"></div>
+
+    <div class="journal-section">
+      <h2>Dream Journal</h2>
+      <div class="journal-controls">
+        <button id="newEntryBtn" class="journal-btn">New Dream Entry</button>
+        <button id="linkDreamsBtn" class="journal-btn">Connect Dreams</button>
+      </div>
+      <div class="journal-entries"></div>
+    </div>
+    
+    <div class="spirit-section">
+      <h2>Spirit Communication Log</h2>
+      <button id="newSpiritEntryBtn" class="journal-btn">Record Spirit Encounter</button>
+      <div class="spirit-encounters"></div>
+    </div>
+
+    <div class="audio-recorder">
+      <h2>Hypnagogic Voice Messages</h2>
+      <div class="recorder-instructions">
+        <p>Record your dream experiences immediately upon waking to capture vivid details and hypnagogic messages. Click the record button and speak naturally about your experience.</p>
+      </div>
+      <div class="recorder-controls">
+        <canvas id="audioVisualizer"></canvas>
+        <button id="recordButton" disabled>Start Recording</button>
+        <div class="recording-status">Initializing microphone access...</div>
+      </div>
+      <div class="recordings-list"></div>
+    </div>
+    
+    <div class="dream-visualizer">
+      <h2>Dream Sequence Map</h2>
+      <canvas id="dreamCanvas"></canvas>
+      <div class="visualization-legend">
+        <div class="legend-item">
+          <div class="legend-color" style="background: #9370DB"></div>
+          <span class="legend-text">Recurring Theme</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #FFD700"></div>
+          <span class="legend-text">Same Spirit Guide</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #87CEEB"></div>
+          <span class="legend-text">Similar Location</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #DDA0DD"></div>
+          <span class="legend-text">Shared Symbol</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #90EE90"></div>
+          <span class="legend-text">Sequential Events</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #FFA07A"></div>
+          <span class="legend-text">Related Message</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="forum-section">
+      <h2>Dream Community Forum</h2>
+      <div class="forum-controls">
+        <button id="newPostBtn" class="journal-btn">Share Dream Experience</button>
+        <div class="tag-filter">
+          <span class="forum-tag">exploration</span>
+          <span class="forum-tag">guidance</span>
+          <span class="forum-tag">spiritual</span>
+          <span class="forum-tag">lucid</span>
+          <span class="forum-tag">interpretation</span>
+        </div>
+      </div>
+      <div class="forum-posts"></div>
+    </div>
+
+  <div id="journalModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Record Dream Experience</h2>
+      <form id="dreamJournalForm">
+        <div class="form-group">
+          <label for="dreamTitle">Dream Title:</label>
+          <input type="text" id="dreamTitle" required>
+        </div>
+        <div class="form-group">
+          <label for="dreamDate">Date:</label>
+          <input type="datetime-local" id="dreamDate" required>
+        </div>
+        <div class="form-group">
+          <label for="dreamDescription">Description:</label>
+          <textarea id="dreamDescription" rows="4" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="dreamTags">Tags (comma-separated):</label>
+          <input type="text" id="dreamTags" placeholder="lucid, flying, spiritual">
+        </div>
+        <div class="form-group">
+          <label for="lucidityLevel">Lucidity Level:</label>
+          <input type="range" id="lucidityLevel" min="1" max="10" value="5">
+          <span id="lucidityValue">5</span>
+        </div>
+        <button type="submit" class="journal-btn">Save Dream</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="symbolModal" class="modal">
+    <div class="symbol-modal-content">
+      <span class="close-symbol">&times;</span>
+      <div id="symbolModalContent"></div>
+    </div>
+  </div>
+
+  <div id="dreamLinkModal" class="modal">
+    <div class="modal-content">
+      <span class="close-link">&times;</span>
+      <h2>Connect Related Dreams</h2>
+      <form id="dreamLinkForm">
+        <div class="link-form-group">
+          <label for="dreamSelect1">First Dream:</label>
+          <select id="dreamSelect1" required></select>
+        </div>
+        
+        <div class="link-form-group">
+          <label for="dreamSelect2">Second Dream:</label>
+          <select id="dreamSelect2" required></select>
+        </div>
+        
+        <div class="link-form-group">
+          <label for="connectionType">Connection Type:</label>
+          <select id="connectionType" required>
+            <option value="Recurring Theme">Recurring Theme</option>
+            <option value="Same Spirit Guide">Same Spirit Guide</option>
+            <option value="Similar Location">Similar Location</option>
+            <option value="Shared Symbol">Shared Symbol</option>
+            <option value="Sequential Events">Sequential Events</option>
+            <option value="Related Message">Related Message</option>
+          </select>
+        </div>
+        
+        <div class="link-form-group">
+          <label for="connectionNotes">Connection Notes:</label>
+          <textarea id="connectionNotes" rows="3" placeholder="Describe how these dreams are connected..."></textarea>
+        </div>
+        
+        <button type="submit" class="link-submit-btn">Create Connection</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="spiritModal" class="modal">
+    <div class="modal-content">
+      <span class="close-spirit">&times;</span>
+      <h2>Record Spirit Encounter</h2>
+      <form id="spiritEncounterForm">
+        <div class="spirit-form-group">
+          <label for="encounterDate">Date of Encounter:</label>
+          <input type="datetime-local" id="encounterDate" required>
+        </div>
+        
+        <div class="spirit-form-group">
+          <label for="spiritName">Spirit Name/Identity:</label>
+          <input type="text" id="spiritName" placeholder="Enter spirit name or description" required>
+        </div>
+        
+        <div class="spirit-form-group">
+          <label for="spiritNature">Nature of Spirit:</label>
+          <select id="spiritNature" required>
+            <option value="Guide">Spirit Guide</option>
+            <option value="Ancestor">Ancestral Spirit</option>
+            <option value="Guardian">Guardian Spirit</option>
+            <option value="Messenger">Messenger Spirit</option>
+          </select>
+        </div>
+        
+        <div class="spirit-form-group">
+          <label for="spiritMessage">Message or Interaction:</label>
+          <textarea id="spiritMessage" rows="4" placeholder="Describe the communication or interaction..." required></textarea>
+        </div>
+        
+        <div class="spirit-form-group">
+          <label for="emotions">Emotional Resonance:</label>
+          <input type="text" id="emotions" placeholder="How did the encounter make you feel?">
+        </div>
+        
+        <div class="spirit-form-group">
+          <label for="spiritualSymbols">Spiritual Symbols (comma-separated):</label>
+          <input type="text" id="spiritualSymbols" placeholder="light, crystal, water, fire">
+        </div>
+        
+        <div class="spirit-form-group">
+          <label for="clarityLevel">Communication Clarity:</label>
+          <div class="clarity-display">
+            <input type="range" id="clarityLevel" min="1" max="10" value="5">
+            <span id="clarityValue">5</span>/10
+          </div>
+        </div>
+        
+        <button type="submit" class="spirit-submit-btn">Record Encounter</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="newPostModal" class="modal">
+    <div class="modal-content">
+      <span class="close-post">&times;</span>
+      <h2>Share Dream Experience</h2>
+      <form id="dreamPostForm">
+        <div class="post-form-group">
+          <label for="postTitle">Title:</label>
+          <input type="text" id="postTitle" required>
+        </div>
+        
+        <div class="post-form-group">
+          <label for="postContent">Share your experience:</label>
+          <textarea id="postContent" required></textarea>
+        </div>
+        
+        <div class="post-form-group">
+          <label for="postTags">Tags (comma-separated):</label>
+          <input type="text" id="postTags" placeholder="spiritual, lucid, guidance">
+        </div>
+        
+        <button type="submit" class="post-submit-btn">Share with Community</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const loadingMessages = [
+      "Establishing ethereal connection...",
+      "Calibrating spiritual frequencies...",
+      "Aligning dream channels...",
+      "Synchronizing consciousness interfaces...",
+      "Loading dream symbol database...",
+      "Preparing neural resonance matrix...",
+      "Connecting to the dream realm...",
+      "Initializing spirit communication protocols..."
+    ];
+
+    let messageIndex = 0;
+    const loadingScreen = document.querySelector('.loading-screen');
+    const progressBar = document.querySelector('.progress-bar');
+    const loadingStatus = document.querySelector('.loading-status');
+
+    function updateLoadingProgress() {
+      const progress = (messageIndex / loadingMessages.length) * 100;
+      progressBar.style.width = `${progress}%`;
+      loadingStatus.textContent = loadingMessages[messageIndex];
+      
+      if (messageIndex < loadingMessages.length - 1) {
+        messageIndex++;
+        setTimeout(updateLoadingProgress, 800);
+      } else {
+        setTimeout(() => {
+          loadingScreen.classList.add('fade-out');
+          setTimeout(() => {
+            loadingScreen.style.display = 'none';
+          }, 500);
+        }, 1000);
+      }
+    }
+
+    window.addEventListener('load', () => {
+      setTimeout(updateLoadingProgress, 500);
+    });
+
+    window.dreamApp = {};
+    
+    async function initializeApp() {
+      try {
+        const modules = await Promise.all([
+          import('./dreamDevice.js'),
+          import('./dreamSymbols.js'),
+          import('./lucidTraining.js'),
+          import('./dreamJournal.js'),
+          import('./spiritComm.js'),
+          import('./audioRecorder.js'),
+          import('./dreamVis.js'),
+          import('./dreamForum.js'),
+          import('./floatingNotes.js')
+        ]);
+
+        const [
+          {DreamDevice},
+          {DreamSymbolDatabase},
+          {LucidTrainingModule},
+          {DreamJournal},
+          {SpiritCommunicationLog},
+          {HypnagogicRecorder},
+          {DreamVisualizer},
+          {DreamForum},
+          {FloatingNotes}
+        ] = modules;
+
+        window.dreamApp = {
+          dreamDevice: new DreamDevice(),
+          dreamSymbols: new DreamSymbolDatabase(),
+          lucidTraining: new LucidTrainingModule(),
+          dreamJournal: new DreamJournal(),
+          spiritComm: new SpiritCommunicationLog(),
+          hypnagogicRecorder: new HypnagogicRecorder(),
+          dreamVisualizer: new DreamVisualizer(),
+          dreamForum: new DreamForum(),
+          floatingNotes: new FloatingNotes()
+        };
+
+        Object.entries(window.dreamApp).forEach(([key, value]) => {
+          window[key] = value;
+        });
+
+        console.log('DreamLink Nexus initialized successfully');
+      } catch (error) {
+        console.error('Error initializing DreamLink Nexus:', error);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeApp);
+    } else {
+      initializeApp();
+    }
+  </script>
+</body>
+</html>
